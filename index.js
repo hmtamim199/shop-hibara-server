@@ -28,16 +28,13 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-    // const panjabiCollection = client.db("panjabidb").collection("panjabi");
-
-    // app.post("/panjabi", async (req, res) => {
-    //   const newPanjabi = req.body;
-    //   const result = await panjabiCollection.insertOne(newPanjabi);
-    //   res.send(result);
-    //   console.log();
-    // });
-
     const panjabiCollection = client.db("panjabidb").collection("panjabi");
+
+    app.get("/panjabi", async (req, res) => {
+      const cursor = panjabiCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
 
     app.post("/panjabi", async (req, res) => {
       const newPanjabi = req.body;
